@@ -17,26 +17,22 @@ public class CoffeeMachine {
         int availableCoffee = scanner.nextInt();
 
         System.out.println("Write how many cups of coffee you will need:");
-        int cupsCoffee = scanner.nextInt();
+        int necessaryCups = scanner.nextInt();
 
-        // Calculate necessary amount of ingredients
-        int necessaryWater = cupsCoffee * 200;
-        int necessaryMilk = cupsCoffee * 50;
-        int necessaryCoffee = cupsCoffee * 15;
-
-        // Determine if machine can make requested amount of coffee
-        int enoughWater = necessaryWater / availableWater;
-        int enoughMilk = necessaryMilk / availableMilk;
-        int enoughCoffee = necessaryCoffee / availableCoffee;
-
-        // Determine minimum amount of coffee that can be made
-        int minCups = Math.min(enoughCoffee, Math.min(enoughWater, enoughMilk));
+        // Calculate cups that can be made from each ingredient
+        double cupsWater = (double) availableWater / 200;
+        double cupsMilk = (double) availableMilk / 50;
+        double cupsCoffee = (double) availableCoffee / 15;
+        int availableCups = (int) Math.min(cupsWater, Math.min(cupsCoffee, cupsMilk));
 
         // Report out results
-        if (cupsCoffee <= minCups) {
-            System.out.println("Yes, I can make that amount of coffee");
+        if (availableCups < necessaryCups) {
+            System.out.println("No, I can only make " + availableCups + " cup(s) of coffee");
+        } else if (availableCups > necessaryCups) {
+            int deltaCups = availableCups - necessaryCups;
+            System.out.println("Yes, I can make that amount of coffee (and even " + deltaCups + " more than that)");
         } else {
-            System.out.println("No, I can only makes " + minCups + " cups(s) of coffee");
+            System.out.println("Yes, I can make that amount of coffee");
         }
     }
 }
